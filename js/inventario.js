@@ -50,11 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Actualizar localStorage al borrar todo
         localStorage.setItem('inventario', JSON.stringify(productos));
 
-        document.getElementById("nombre-producto").value = "";
-        document.getElementById("codigo-producto").value = "";
-        document.getElementById("precio-producto").value = "";
-        document.getElementById("cantidad-producto").value = "";
-        document.getElementById("categoria-producto").value = "";
+        formulario.reset();
 
         actualizarLista();
     });
