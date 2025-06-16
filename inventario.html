@@ -4,43 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/containers.css" />
     <title>Inventario</title>
 </head>
 
 <body>
-    <h1>INVENTARIO</h1>
-    <div>
-        <form id="form-inventario">
-            <label for="nombre-producto">Nombre del Produto:</label>
-            <input id="nombre-producto" name="nombre" autocomplete="off"> <br>
-            <label for="codigo-producto">Código del Produto:</label>
-            <input id="codigo-producto" name="codigo" autocomplete="off"> <br>
-            <label for="precio-producto">Precio del Produto:</label>
-            <input id="precio-producto" name="precio" autocomplete="off"> <br>
-            <label for="cantidad-producto">Cantidad del Produto:</label>
-            <input id="cantidad-producto" name="cantidad" autocomplete="off"> <br>
-            <label for="categoria-producto">Categoría del Produto:</label>
-            <input id="categoria-producto" name="categoria" autocomplete="off"> <br>
-            <button type="submit">Agregar producto</button>
-        </form>
+
+    <div class="main-content">
+
+
+        <div class="divform">
+
+            <form id="form-inventario">
+                <h1>
+                    <center> INGRESAR INVENTARIO</center>
+                </h1>
+                <label for="nombre-producto">Nombre del Produto:</label>
+                <input id="nombre-producto" name="nombre" autocomplete="off" type="text" required> <br>
+                <label for="codigo-producto">Código del Produto:</label>
+                <input id="codigo-producto" name="codigo" autocomplete="off" type="text" required> <br>
+                <label for="precio-producto">Precio del Produto:</label>
+                <input id="precio-producto" name="precio" min="0.01" autocomplete="off" type="number" step="0.01"
+                    required>
+                <br>
+                <label for="cantidad-producto">Cantidad del Produto:</label>
+                <input id="cantidad-producto" name="cantidad" autocomplete="off" type="number" required> <br>
+                <label for="categoria-producto">Categoría del Produto:</label>
+                <input id="categoria-producto" name="categoria" autocomplete="off" type="text" required> <br>
+                <button type="submit">Agregar producto</button>
+                <button id="eliminar-tabla">Eliminar Tabla</button>
+            </form>
+        </div>
+
+
+
+        <div class="divtabla">
+
+            <h1>
+                <center>LISTA DE PRODUCTOS</center>
+            </h1>
+            <table id="tabla-productos" border="1">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Código</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Categoría</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-productos">
+                </tbody>
+            </table>
+
+        </div>
+
     </div>
-    <hr>
-    <h1>LISTA DE PRODUCTOS</h1>
-    <table id="tabla-productos" border="1">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Código</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Categoría</th>
-            </tr>
-        </thead>
-        <tbody id="tbody-productos">
-        </tbody>
-    </table>
-    <hr>
-    <button id="eliminar-tabla">Eliminar Tabla</button>
+
+
+
+    
     <script src="js/inventario.js"></script>
 </body>
 

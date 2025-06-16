@@ -1,0 +1,204 @@
+/* Importa fuente limpia y moderna */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #6857b4;
+  margin: 0;
+  padding: 20px;
+  color: #ffffff;
+  justify-content: center;
+  
+}
+
+h1{
+  width: 100%;
+  height: 40px;
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-size: 25px;
+  
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px; /* espacio entre form y tabla */
+}
+
+.divform{
+  flex: 1;
+  max-width: 30%; /* cada uno ocupa hasta la mitad */
+}
+
+.divtabla {
+  flex: 1;
+  max-width: 70%; /* cada uno ocupa hasta la mitad */
+}
+
+/* Formulario estilizado */
+form {
+  background: rgb(151, 140, 209);
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+form input[type="text"]{
+  width: 70%;
+  height: 40px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border: 1.8px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+
+form input[type="number"] {
+  width: 40%;
+  height: 40px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border: 1.8px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+
+
+form input[type="text"]:focus,
+form input[type="number"]:focus {
+  border-color: #3e148b;
+  outline: none;
+}
+
+form button {
+  background: #3e148b;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white; 
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 55%;
+  height: 60px;
+}
+
+form button:hover {
+  background: #18094eee;
+}
+
+/* Tabla estilizada */
+.table-container {
+  flex: 2 1 600px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(213, 212, 243, 0.753);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-size: 20px;
+  color:black;
+}
+
+thead {
+  background: #3e148b;
+  color: white;
+  font-weight: 600;
+}
+
+thead th {
+  padding: 16px 12px;
+  text-align: left;
+  user-select: none;
+}
+
+.divtabla{
+  background: rgb(151, 140, 209);
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+}
+
+tbody tr {
+  border-bottom: 1px solid #36095c;
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+tbody tr:hover {
+  background-color: #9e84db;
+}
+
+tbody td {
+  padding: 14px 12px;
+  vertical-align: middle;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #cbb3e2;
+}
+
+
+/* Botón eliminar todo */
+#eliminar-tabla {
+  margin-top: 20px;
+  background: #cc0000;
+  width: 200px;
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#eliminar-tabla:hover {
+  background: #990000;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .main-content {
+    flex-direction: column;
+  }
+  .table-container,
+  form {
+    flex: 1 1 100%;
+  }
+}
