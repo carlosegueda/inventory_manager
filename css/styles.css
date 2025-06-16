@@ -22,7 +22,7 @@ h1{
   margin-bottom: 15px;
   border-radius: 8px;
   font-size: 25px;
-  
+  margin-top: 50px;
 }
 
 .main-content {
@@ -201,4 +201,30 @@ tbody tr:nth-child(even) {
   form {
     flex: 1 1 100%;
   }
+}
+
+.navbar {
+  background-color: #3e148b;
+  overflow: hidden;
+  position: fixed; /* fija arriba */
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.navbar a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+.navbar a:hover {
+  background-color: #5f2fb8;
+  color: #fff;
 }
