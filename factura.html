@@ -1,11 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/stylefactura.css" />
     <title>Document</title>
 </head>
+
 <body>
-    inventario
+    <nav class="navbar">
+        <a href="index.html">REGRESAR</a>
+        <a href="inventario.html">INVENTARIO</a>
+        <a href="factura.html">FACTURA</a>
+    </nav>
+    <div class="contenedor-main">
+        <form id="form-factura">
+            <h1>
+                <center> FACTURA</center>
+            </h1>
+            <label for="nombre-factura">Nombre del Produto:</label>
+            <!--<input id="nombre-factura" name="nombre-factura" autocomplete="off" type="text" required> <br>-->
+            <input list="lista-nombres" id="nombre-factura" name="nombre-factura" />
+            <datalist id="lista-nombres">
+            </datalist>
+            <label id="precio-unitario">00.00</label>
+            <label for="cantidad-factura">Cantidad del Produto:</label>
+            <input id="cantidad-factura" name="cantidad-factura" autocomplete="off" type="number" required> <br>
+
+            <label id="precio-subtotal">00.00</label>
+            <button id="buscar-precio">AGREGAR A LA FACTURA</button>
+
+
+
+
+
+        </form>
+    </div>
+
+
+    <div class="divtabla">
+
+        <h1>
+            <center>LISTA DE PRODUCTOS</center>
+        </h1>
+        <table id="tabla-productos" border="1">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Precio Subtotal</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-productos">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Subtotal:</td>
+                    <td id="subtotal">$0.00</td>
+                </tr>
+            </tfoot>
+        </table>
+        <button id="eliminar-factura" type="button">Eliminar Factura</button>
+    </div>
+
+
+
+    <script src="js/factura.js"></script>
 </body>
+
 </html>

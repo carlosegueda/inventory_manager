@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formulario.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        const nombre = document.getElementById("nombre-producto").value;
+        const nombre = document.getElementById("nombre-producto").value.trim().toLowerCase();
         const codigo = document.getElementById("codigo-producto").value;
         const precio = parseFloat(document.getElementById("precio-producto").value);
         const cantidad = parseInt(document.getElementById("cantidad-producto").value);
