@@ -1,0 +1,15 @@
+POST http://localhost:3000/productos
+Content-Type: application/json
+
+{
+  "nombre": "Audifonos Rojos",
+  "codigo": "05",
+  "precio": 1500,
+  "cantidad": 5,
+  "categoria": "Electronica"
+}
+
+###
+
+GET http://localhost:3000/productos
+Accept: application/json
