@@ -2,11 +2,11 @@ POST http://localhost:3000/productos
 Content-Type: application/json
 
 {
-  "nombre": "Audifonos Rojos",
-  "codigo": "05",
-  "precio": 1500,
-  "cantidad": 5,
-  "categoria": "Electronica"
+  "nombre": "Zapatpos Rojos",
+  "codigo": "08",
+  "precio": 2000,
+  "cantidad": 12,
+  "categoria": "Calzado"
 }
 
 ###

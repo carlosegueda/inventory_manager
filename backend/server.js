@@ -1,76 +1,24 @@
+//importo express que permite crear rutas para el node.js
 const express = require('express');
+//importo cors para permitir conexiones con el front
 const cors = require('cors');
-const sql = require('mssql');
+//importo el archivo de las rutas
+const productosRoutes = require('./routes/productos');
 
+//creo la instancia del server (app) de express y define el puerto donde va escuchar (3000)
 const app = express();
 const port = 3000;
 
+//Permite solicitudes a otros dominios
 app.use(cors());
+
+//permite que el servidor pueda recibir JSON en las peticiones POST y PUT
 app.use(express.json());
 
-const config = {
-  user: 'carlos.osegueda',
-  password: 'CO20212030669',
-  server: '3.128.144.165',
-  database: 'DB20212030669',
-  options: {
-    encrypt: true,
-    trustServerCertificate: true,
-  },
-};
+//le dice a express que todas las rutas que terminen en /productos seran manejadas por las rutas.js
+app.use('/productos', productosRoutes);
 
-let pool;
-
-sql.connect(config).then((p) => {
-  pool = p;
-  console.log('Conectado a SQL Server');
-}).catch(err => {
-  console.error('Error conectando a SQL Server:', err);
-});
-
-// Obtener todos los productos
-app.get('/productos', async (req, res) => {
-  try {
-    const result = await pool.request().query('SELECT * FROM ProductosGI');
-    res.json(result.recordset);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al obtener productos' });
-  }
-});
-
-// Agregar un producto
-app.post('/productos', async (req, res) => {
-  const { nombre, codigo, cantidad, precio, categoria } = req.body;
-
-  try {
-    await pool.request()
-      .input('nombre', sql.VarChar, nombre)
-      .input('codigo', sql.VarChar, codigo)
-      .input('cantidad', sql.Int, cantidad)
-      .input('precio', sql.Decimal(10, 2), precio)
-      .input('categoria', sql.VarChar, categoria)
-      .query(`INSERT INTO ProductosGI (nombre, codigo, cantidad, precio, categoria)
-              VALUES (@nombre, @codigo, @cantidad, @precio, @categoria)`);
-    res.json({ message: 'Producto agregado' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al agregar producto' });
-  }
-});
-
-
-// Eliminar todos los productos
-app.delete('/productos', async (req, res) => {
-  try {
-    await pool.request().query('DELETE FROM ProductosGI');
-    res.json({ message: 'Productos eliminados' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al eliminar productos' });
-  }
-});
-
+//inicia el server y muestra el mensaje de escuchando
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });
