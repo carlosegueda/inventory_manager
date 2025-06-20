@@ -67,7 +67,7 @@ document.getElementById('form-inventario').addEventListener('submit', async (e) 
 });
 
 // Función para eliminar todos los productos
-document.getElementById('btnEliminarTodo').addEventListener('click', async () => {
+document.getElementById('eliminar-tabla').addEventListener('click', async () => {
   if (!confirm('¿Seguro que quieres eliminar todos los productos?')) return;
 
   try {

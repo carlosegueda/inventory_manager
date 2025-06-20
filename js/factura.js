@@ -1,145 +1,134 @@
-document.addEventListener("DOMContentLoaded", function () {
-    llenarDatalist();
-    const inputs = [
-        document.getElementById("nombre-factura"),
-        document.getElementById("cantidad-factura")
-    ];
-
-    inputs.forEach(input => {
-        input.addEventListener("input", function () {
-
-            const nombreBuscado = document.getElementById("nombre-factura").value.trim().toLowerCase();
-
-            const productosGuardados = JSON.parse(localStorage.getItem("inventario")) || [];
-
-            const producto = productosGuardados.find(p => p.nombre.toLowerCase() === nombreBuscado);
-
-            const precioUnitarioLabel = document.getElementById("precio-unitario");
-            const cantidadFactura = parseInt(document.getElementById("cantidad-factura").value) || 0;
-            const precioSubtotalLabel = document.getElementById("precio-subtotal");
-
-            if (producto) {
-                precioUnitarioLabel.textContent = `${producto.precio.toFixed(2)}`;
-                const subtotal = producto.precio * cantidadFactura;
-                precioSubtotalLabel.textContent = `${subtotal.toFixed(2)}`;
-            } else {
-                precioUnitarioLabel.textContent = "";
-                precioSubtotalLabel.textContent = "";
-            }
-        });
-    });
-
-    let productosFactura = [];
-
-    const guardados = JSON.parse(localStorage.getItem("factura"));
-    if (guardados && Array.isArray(guardados)) {
-        productosFactura = guardados;
-        actualizarLista(); // Mostrar la lista al cargar
-    }
-
-    const formulario = document.getElementById("form-factura");
-
-    formulario.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const nombre = document.getElementById("nombre-factura").value.trim().toLowerCase();
-        const precioUnitario = parseFloat(document.getElementById("precio-unitario").textContent) || 0;
-        const cantidad = parseInt(document.getElementById("cantidad-factura").value) || 0;
-        const precioSubtotal = parseFloat(document.getElementById("precio-subtotal").textContent) || 0;
-
-        const productoFactura = {
-            nombre,
-            precioUnitario,
-            cantidad,
-            precioSubtotal
-        };
-
-        productosFactura.push(productoFactura);
-        localStorage.setItem('factura', JSON.stringify(productosFactura));
-
-        actualizarLista();
-        actualizarSubtotalTotal();
-        formulario.reset();
-
-
-
-
-
-    });
-    const BtnEliminarTodo = document.getElementById("eliminar-factura");
-    BtnEliminarTodo.addEventListener("click", function () {
-
-        event.preventDefault();
-        productosFactura.length = 0;
-        // Actualizar localStorage al borrar todo
-        localStorage.setItem('factura', JSON.stringify(productosFactura));
-
-        formulario.reset();
-
-        actualizarLista();
-    });
-
-    function actualizarSubtotalTotal() {
-        const tbody = document.getElementById("tbody-productos");
-        let suma = 0;
-
-        // Recorremos todas las filas del tbody
-        Array.from(tbody.rows).forEach(fila => {
-            // Obtenemos el texto del td en la columna subtotal (índice 3)
-            let texto = fila.cells[3].textContent;
-
-            // Quitamos el símbolo $ y convertimos a número
-            let valor = parseFloat(texto.replace("$", ""));
-
-            if (!isNaN(valor)) {
-                suma += valor;
-            }
-        });
-
-        // Actualizamos la celda del total
-        const celdaTotal = document.getElementById("subtotal");
-        celdaTotal.textContent = `$${suma.toFixed(2)}`;
-    }
-
-
-    function actualizarLista() {
-        const tbody = document.getElementById("tbody-productos");
-        tbody.innerHTML = "";
-
-        productosFactura.forEach(function (productoFactura) {
-            const fila = document.createElement("tr");
-
-            const celdaNombre = document.createElement("td");
-            celdaNombre.textContent = productoFactura.nombre;
-            fila.appendChild(celdaNombre);
-
-            const celdaCantidad = document.createElement("td");
-            celdaCantidad.textContent = productoFactura.cantidad;
-            fila.appendChild(celdaCantidad);
-
-            const celdaPrecioU = document.createElement("td");
-            celdaPrecioU.textContent = `$${productoFactura.precioUnitario.toFixed(2)}`;
-            fila.appendChild(celdaPrecioU);
-
-            const celdaPrecioS = document.createElement("td");
-            celdaPrecioS.textContent = `$${productoFactura.precioSubtotal.toFixed(2)}`;
-            fila.appendChild(celdaPrecioS);
-
-            tbody.appendChild(fila);
-        });
-    }
-
-    function llenarDatalist() {
-        const datalist = document.getElementById("lista-nombres");
-        datalist.innerHTML = ""; // Limpia opciones anteriores
-
-        const productos = JSON.parse(localStorage.getItem("inventario")) || [];
-
-        productos.forEach(producto => {
-            const option = document.createElement("option");
-            option.value = producto.nombre;
-            datalist.appendChild(option);
-        });
-    }
-
+document.addEventListener('DOMContentLoaded', () => {
+    actualizarElementos();
+    
 });
+
+const API_URL = 'http://localhost:3000/productos';
+const BtnAgregarAFactura = document.getElementById("buscar-precio");
+const precioUnitario = document.getElementById("precio-unitario");
+const datalist = document.getElementById("lista-nombres");
+
+let miProducto = null
+let Subtotal = null
+
+
+async function actualizarElementos() {
+    //ACTUALIZAR EL NOMBRE
+    try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error('Error al obtener nombres');
+        const productos = await res.json();
+
+        const nombres = productos.map(obj => Object.values(obj)[1]);
+        nombres.forEach(nombre => {
+            const option = document.createElement('option');
+            option.value = nombre;
+            datalist.append(option);
+
+        });
+
+        //ACTUALIZAR EL PRECIO UNITARIO
+        const inputs = [
+            document.getElementById("nombre-factura"),
+            document.getElementById("cantidad-factura")
+        ];
+
+        const inputNombre = document.getElementById("nombre-factura")
+
+
+        inputs.forEach(input => {
+            input.addEventListener("input", function () {
+
+                const nombreFactura = inputNombre.value.trim().toLowerCase();
+                miProducto = productos.find(p => p.nombre.toLowerCase() === nombreFactura);
+
+                if (miProducto) {
+                    console.log("producto encontrado", miProducto);
+                    document.getElementById("precio-unitario").textContent = `Precio Unitario: $${miProducto.precio}`;
+                }
+                else {
+                    console.log("producto no encontrado");
+                    document.getElementById("precio-unitario").textContent = `Precio Unitario: $00.00 `;
+                }
+                const precioSubtotal = document.getElementById("precio-subtotal");
+                const inputCantidad = document.getElementById("cantidad-factura").value
+                Subtotal = miProducto.precio * inputCantidad;
+                precioSubtotal.textContent = `Precio Subtotal: $${Subtotal}`;
+                
+            });
+        });
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+        alert('No se pudo cargar la lista de productos');
+    }
+};
+
+
+
+
+
+
+document.getElementById('form-factura').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+
+    console.log(miProducto)
+
+    const nombreProducto = document.getElementById('nombre-factura').value.trim();
+    const cantidadProducto = parseInt(document.getElementById('cantidad-factura').value);
+    const clienteFactura = document.getElementById("cliente-factura").value.trim();
+
+    if (!nombreProducto || isNaN(cantidadProducto) || !clienteFactura ) {
+        alert('Por favor complete todos los campos correctamente');
+        return;
+    }
+    
+    
+
+    try {
+        document.getElementById("cliente-factura").readOnly = true;
+        const tbody = document.getElementById("tbody-factura");
+        const cantidad = document.getElementById("cantidad-factura").value;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+        <td>${miProducto.nombre}</td>
+        <td>${cantidad}</td>
+        <td>${miProducto.precio}</td>
+        <td>${Subtotal}</td>
+      `;
+        tbody.appendChild(tr);
+        actualizarTotalFactura();
+        document.getElementById("nombre-factura").value = "";
+        document.getElementById("cantidad-factura").value = "";
+        document.getElementById("precio-unitario").textContent = "$00.00";
+        document.getElementById("precio-subtotal").textContent = "$00.00";
+    }
+    catch (error) {
+        console.error('Error al cargar productos:', error);
+        alert('El producto no existe en el inventario. Ingrese el nombre de un producto existente');
+    }
+});
+
+
+function actualizarTotalFactura() {
+  let total = 0;
+  const filas = document.querySelectorAll("#tbody-factura tr");
+
+  filas.forEach(fila => {
+    const celdaSubtotal = fila.querySelector("td:last-child"); // última celda = subtotal
+    const texto = celdaSubtotal.textContent.replace("$", "").trim();
+    const valor = parseFloat(texto);
+    if (!isNaN(valor)) {
+      total += valor;
+    }
+  });
+
+  document.getElementById("subtotal").textContent = `$${total.toFixed(2)}`;
+}
+
+
+
+
+
+
