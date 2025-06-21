@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     actualizarElementos();
-    
+
 });
 
 const API_URL = 'http://localhost:3000/productos';
@@ -54,7 +54,7 @@ async function actualizarElementos() {
                 const inputCantidad = document.getElementById("cantidad-factura").value
                 Subtotal = miProducto.precio * inputCantidad;
                 precioSubtotal.textContent = `Precio Subtotal: $${Subtotal}`;
-                
+
             });
         });
     } catch (error) {
@@ -70,7 +70,7 @@ async function actualizarElementos() {
 
 document.getElementById('form-factura').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
 
     console.log(miProducto)
 
@@ -78,12 +78,12 @@ document.getElementById('form-factura').addEventListener('submit', async (e) => 
     const cantidadProducto = parseInt(document.getElementById('cantidad-factura').value);
     const clienteFactura = document.getElementById("cliente-factura").value.trim();
 
-    if (!nombreProducto || isNaN(cantidadProducto) || !clienteFactura ) {
+    if (!nombreProducto || isNaN(cantidadProducto) || !clienteFactura) {
         alert('Por favor complete todos los campos correctamente');
         return;
     }
-    
-    
+
+
 
     try {
         document.getElementById("cliente-factura").readOnly = true;
@@ -94,8 +94,8 @@ document.getElementById('form-factura').addEventListener('submit', async (e) => 
         tr.innerHTML = `
         <td>${miProducto.nombre}</td>
         <td>${cantidad}</td>
-        <td>${miProducto.precio}</td>
-        <td>${Subtotal}</td>
+        <td>$${miProducto.precio}</td>
+        <td>$${Subtotal}</td>
       `;
         tbody.appendChild(tr);
         actualizarTotalFactura();
@@ -112,20 +112,92 @@ document.getElementById('form-factura').addEventListener('submit', async (e) => 
 
 
 function actualizarTotalFactura() {
-  let total = 0;
-  const filas = document.querySelectorAll("#tbody-factura tr");
+    let total = 0;
+    const filas = document.querySelectorAll("#tbody-factura tr");
 
-  filas.forEach(fila => {
-    const celdaSubtotal = fila.querySelector("td:last-child"); // última celda = subtotal
-    const texto = celdaSubtotal.textContent.replace("$", "").trim();
-    const valor = parseFloat(texto);
-    if (!isNaN(valor)) {
-      total += valor;
+    filas.forEach(fila => {
+        const celdaSubtotal = fila.querySelector("td:last-child"); // última celda = subtotal
+        const texto = celdaSubtotal.textContent.replace("$", "").trim();
+        const valor = parseFloat(texto);
+        if (!isNaN(valor)) {
+            total += valor;
+        }
+    });
+
+
+    document.getElementById("subtotal").textContent = `$${total.toFixed(2)}`;
+    document.getElementById("isv").textContent = `$${(total.toFixed(2) * 0.15).toFixed(2)}`;
+    document.getElementById("total-pagar").textContent = `$${(total.toFixed(2) * 1.15).toFixed(2)}`;
+};
+
+
+document.getElementById("generar-factura").addEventListener("click", () => {
+
+    const valor = document.getElementById("cliente-factura").value.trim();
+
+    if (!valor) {
+      alert("El cliente es obligatorio.");
+      return;
     }
-  });
 
-  document.getElementById("subtotal").textContent = `$${total.toFixed(2)}`;
-}
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+
+    doc.setFontSize(19);
+
+    cliente = document.getElementById("cliente-factura").value;
+    doc.text("Factura", 25, 25)
+    doc.text("Cliente: " + cliente, 25, 35)
+
+
+    doc.autoTable({
+        html: '#tabla-factura', // O usa "head" y "body" manualmente
+        startY: 40,
+        theme: 'grid', // Otros: 'striped', 'plain'
+
+        styles: {
+            font: 'helvetica',
+            fontSize: 12,
+            textColor: [0, 0, 0],
+            lineColor: [100, 100, 100],
+            fillColor: [255, 255, 255],
+            lineWidth: 0.2,
+            cellPadding: 2,
+        },
+
+        headStyles: {
+            fillColor: [220, 220, 220], // azul
+            textColor: [0, 0, 0],
+            fontStyle: 'bold',
+            halign: 'center',
+        },
+
+        bodyStyles: {
+            fillColor: [255, 255, 255],
+            textColor: [0, 0, 0],
+            halign: 'left',
+        },
+
+        alternateRowStyles: {
+            fillColor: [255, 255, 255],
+        },
+
+        columnStyles: {
+            0: { cellWidth: 50 },   // Producto
+            1: { halign: 'center' }, // Cantidad
+            2: { halign: 'right' },  // Precio
+            3: { halign: 'right' },  // Total
+        },
+
+        
+
+        margin: { top: 25 },
+    });
+
+   
+    doc.save("Factura.pdf");
+});
 
 
 

@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/stylefactura.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
     <title>Document</title>
 </head>
 
@@ -23,7 +26,7 @@
             <input id="cliente-factura" name="cliente-factura" autocomplete="off" type="text" required> <br>
             <label for="nombre-factura">Nombre del Produto:</label>
             <!--<input id="nombre-factura" name="nombre-factura" autocomplete="off" type="text" required> <br>-->
-            <input list="lista-nombres" id="nombre-factura" name="nombre-factura" autocomplete="off"/>
+            <input list="lista-nombres" id="nombre-factura" name="nombre-factura" autocomplete="off" type="list"/>
             <datalist id="lista-nombres">   
             </datalist>
             <label id="precio-unitario">$00.00</label>
@@ -62,13 +65,18 @@
                     <td colspan="3">Subtotal:</td>
                     <td id="subtotal">$0.00</td>
                 </tr>
+                <tr>
+                    <td colspan="3">ISV:</td>
+                    <td id="isv">$0.00</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total a Pagar:</td>
+                    <td id="total-pagar">$0.00</td>
+                </tr>
             </tfoot>
         </table>
-        <button id="generar-factura" type="button">Eliminar Factura</button>
+        <button id="generar-factura" type="button">Generar Factura</button>
     </div>
-
-
-
     <script src="js/factura.js"></script>
 </body>
 
