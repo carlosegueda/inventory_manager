@@ -2,8 +2,8 @@
 const { poolConnect, sql, pool } = require('../db');
 
 
-//FUNCION OBTENERPRODUCTOS (GET)
-async function obtenerProductos(req, res) {
+//FUNCION OBTENER TODOS LOS PRODUCTOS (GET))
+async function getAll(req, res) {
   try {
     //espera a que termine la conexion a la bd
     await poolConnect;
@@ -18,23 +18,22 @@ async function obtenerProductos(req, res) {
   }
 }
 
-//FUNCION AGREGARPRODUCTO (POST)
-async function agregarProducto(req, res) {
+//FUNCION AGREGAR PRODUCTO (POST)
+async function addProduct(req, res) {
   try {
     //espera a que se termine la conexion a la bd
     await poolConnect;
     //extrae los datos enviados en el POST
-    const { nombre, codigo, precio, cantidad, categoria } = req.body;
+    const { nombre, precio, cantidad, categoria } = req.body;
     //crea la consulta sql en la que agrega los datos a una fila en la tabla
     const result = await pool.request()
       .input('nombre', sql.VarChar, nombre)
-      .input('codigo', sql.VarChar, codigo)
       .input('precio', sql.Decimal(10, 2), precio)
       .input('cantidad', sql.Int, cantidad)
       .input('categoria', sql.VarChar, categoria)
       .query(`
-        INSERT INTO ProductosGI (nombre, codigo, precio, cantidad, categoria)
-        VALUES (@nombre, @codigo, @precio, @cantidad, @categoria)
+        INSERT INTO ProductosGI (nombre, precio, cantidad, categoria)
+        VALUES (@nombre, @precio, @cantidad, @categoria)
       `);
     //cuando termina manda este mensaje
     res.status(201).json({ mensaje: 'Producto agregado correctamente' });
@@ -45,8 +44,8 @@ async function agregarProducto(req, res) {
   }
 }
 
-
-async function eliminarProductos(req, res) {
+//FUNCION ELIMINAR TODOS LOS PRODUCTOS (DELETE)
+async function deleteAll(req, res) {
   try {
     await pool.request().query('DELETE FROM ProductosGI');
     res.json({ message: 'Productos eliminados' });
@@ -56,6 +55,59 @@ async function eliminarProductos(req, res) {
   }
 }
 
+//FUNCION ELIMINAR PRODUCTO POR ID (DELETE)
+async function deleteById(req, res) {
+  const codigo = parseInt(req.params.codigo);
+  if (isNaN(codigo)) {
+    return res.status(400).json({ error: 'Código inválido' });
+  }
 
+  try {
+    await poolConnect;
 
-module.exports = { obtenerProductos, agregarProducto, eliminarProductos };
+    const request = pool.request();
+    const result = await request
+      .input('codigo', sql.Int, codigo)
+      .query('DELETE FROM ProductosGI WHERE codigo = @codigo');
+
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    res.json({ message: 'Producto eliminado correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar producto:', error);
+    res.status(500).json({ error: 'Error al eliminar el producto' });
+  }
+}
+
+//FUNCION OBTENER PRODUCTO POR ID (GET)
+async function getById(req, res) {
+  const codigo = parseInt(req.params.codigo);
+  if (isNaN(codigo)) {
+    return res.status(400).json({ error: 'Código inválido' });
+  }
+
+  try {
+    await poolConnect; // Espera a que la conexión se establezca
+
+    const request = pool.request();
+    const result = await request
+      .input('codigo', sql.Int, codigo)
+      .query('SELECT * FROM ProductosGI WHERE codigo = @codigo');
+
+    const producto = result.recordset[0];
+    if (!producto) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    res.json(producto);
+  } catch (error) {
+    console.error('Error al obtener producto:', error);
+    res.status(500).json({ error: 'Error al obtener el producto' });
+  }
+}
+
+// Exporto las funciones para que puedan ser utilizadas en otros archivos
+module.exports = { getAll, addProduct, getById, deleteById , deleteAll };
+

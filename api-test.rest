@@ -2,8 +2,7 @@ POST http://localhost:3000/productos
 Content-Type: application/json
 
 {
-  "nombre": "Zapatpos Rojos",
-  "codigo": "08",
+  "nombre": "Mono Robot",
   "precio": 2000,
   "cantidad": 12,
   "categoria": "Calzado"
@@ -13,3 +12,13 @@ Content-Type: application/json
 
 GET http://localhost:3000/productos
 Accept: application/json
+
+### 
+DELETE http://localhost:3000/productos/32
+Accept: application/json
+
+### 
+GET http://localhost:3000/productos/32
+Accept: application/json
+
+

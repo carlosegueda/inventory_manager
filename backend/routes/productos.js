@@ -5,16 +5,24 @@ const express = require('express');
 const router = express.Router();
 
 //Importo las funciones(controllers) { obtenerProductos, agregarProducto, eliminarProductos } que estan en el archivo de los controllers
-const { obtenerProductos, agregarProducto, eliminarProductos } = require('../controllers/productosController');
-
-//defino el metodo GET, y asigno obtenerProductos cuando se haga la peticion
-router.get('/', obtenerProductos);
+const { addProduct, getAll, getById, deleteAll, deleteById} = require('../controllers/productosController');
 
 //defino el metodo POST, y asigno agregarProducto cuando se haga la peticion
-router.post('/', agregarProducto);  
+router.post('/', addProduct);
+
+//defino el metodo GET, y asigno obtenerProductos cuando se haga la peticion
+router.get('/', getAll);
+
+//defino el metodo GET con un parametro codigo, y asigno obtenerProductos cuando se haga la peticion
+router.get('/:codigo', getById);
 
 //defino el metodo DELETE, y asigno eliminarProductos cuando se haga la peticion
-router.delete('/', eliminarProductos)
+router.delete('/', deleteAll);
+
+//defino el metodo DELETE con un parametro codigo, y asigno eliminarProductos cuando se haga la peticion
+router.delete('/:codigo', deleteById);
+
+
 
 //exporto el enrutador para usarlo en otros archivos
 module.exports = router;

@@ -18,8 +18,8 @@ async function actualizarElementos() {
         const res = await fetch(API_URL);
         if (!res.ok) throw new Error('Error al obtener nombres');
         const productos = await res.json();
-
-        const nombres = productos.map(obj => Object.values(obj)[1]);
+        console.log(productos);
+        const nombres = productos.map(obj => Object.values(obj)[0]);
         nombres.forEach(nombre => {
             const option = document.createElement('option');
             option.value = nombre;

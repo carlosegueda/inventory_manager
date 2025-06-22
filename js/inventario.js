@@ -23,6 +23,10 @@ async function actualizarLista() {
         <td>${prod.cantidad}</td>
         <td>${prod.precio}</td>
         <td>${prod.categoria}</td>
+        <td>
+          <button onclick="eliminarProducto()">🚮</button>
+          <button onclick="editarProducto()">✏️</button>
+        </td>
       `;
       tbody.appendChild(tr);
     });
@@ -32,17 +36,18 @@ async function actualizarLista() {
   }
 }
 
+
+
 // Capturar el submit del formulario para agregar producto
 document.getElementById('form-inventario').addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const nombre = document.getElementById('nombre-producto').value.trim();
-  const codigo = document.getElementById('codigo-producto').value.trim();
   const cantidad = parseInt(document.getElementById('cantidad-producto').value);
   const precio = parseFloat(document.getElementById('precio-producto').value);
   const categoria = document.getElementById('categoria-producto').value.trim();
 
-  if (!nombre || !codigo || isNaN(cantidad) || isNaN(precio) || !categoria) {
+  if (!nombre || isNaN(cantidad) || isNaN(precio) || !categoria) {
     alert('Por favor complete todos los campos correctamente');
     return;
   }
@@ -51,7 +56,7 @@ document.getElementById('form-inventario').addEventListener('submit', async (e) 
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre, codigo, cantidad, precio, categoria }),
+      body: JSON.stringify({ nombre, cantidad, precio, categoria }),
     });
 
     if (!res.ok) throw new Error('Error al agregar producto');
@@ -65,6 +70,8 @@ document.getElementById('form-inventario').addEventListener('submit', async (e) 
     alert('No se pudo agregar el producto');
   }
 });
+
+
 
 // Función para eliminar todos los productos
 document.getElementById('eliminar-tabla').addEventListener('click', async () => {
@@ -80,3 +87,23 @@ document.getElementById('eliminar-tabla').addEventListener('click', async () => 
     alert('No se pudo eliminar los productos');
   }
 });
+
+
+
+//codigo para rellenar campos al darle click a una fila de la tabla
+document.getElementById('tbody-productos').addEventListener('click', (e) => {
+  const tr = e.target.closest('tr');
+  if (!tr) return;
+
+  const nombre = tr.children[0].textContent;
+  const cantidad = tr.children[2].textContent;
+  const precio = tr.children[3].textContent;
+  const categoria = tr.children[4].textContent;
+
+  document.getElementById('nombre-producto').value = nombre;
+  document.getElementById('cantidad-producto').value = cantidad;
+  document.getElementById('precio-producto').value = precio;
+  document.getElementById('categoria-producto').value = categoria;
+});
+
+
