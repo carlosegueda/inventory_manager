@@ -23,10 +23,9 @@ async function actualizarLista() {
         <td>${prod.cantidad}</td>
         <td>${prod.precio}</td>
         <td>${prod.categoria}</td>
-        <td>
-          <button onclick="eliminarProducto()">🚮</button>
-          <button onclick="editarProducto()">✏️</button>
-        </td>
+        <th>
+          <button onclick="eliminarProducto()">❌</button>
+        </th>
       `;
       tbody.appendChild(tr);
     });
@@ -49,6 +48,14 @@ document.getElementById('form-inventario').addEventListener('submit', async (e) 
 
   if (!nombre || isNaN(cantidad) || isNaN(precio) || !categoria) {
     alert('Por favor complete todos los campos correctamente');
+    return;
+  }
+
+  //validar que el nombre del producto no exista
+  const productos = await fetch(API_URL).then(res => res.json());
+
+  if (productos.some(p => p.nombre.toLowerCase() === nombre.toLowerCase())) {
+    alert('El producto ya existe');
     return;
   }
 
@@ -91,7 +98,7 @@ document.getElementById('eliminar-tabla').addEventListener('click', async () => 
 
 
 //codigo para rellenar campos al darle click a una fila de la tabla
-document.getElementById('tbody-productos').addEventListener('click', (e) => {
+document.getElementById('tbody-productos').addEventListener('dblclick', (e) => {
   const tr = e.target.closest('tr');
   if (!tr) return;
 
@@ -107,3 +114,24 @@ document.getElementById('tbody-productos').addEventListener('click', (e) => {
 });
 
 
+//boton para eliminar un producto
+function eliminarProducto() {
+  const tr = event.target.closest('tr');
+  if (!tr) return;
+
+  const nombre = tr.children[0].textContent;
+  if (!confirm(`¿Seguro que quieres eliminar el producto ${nombre}?`)) return;
+
+  const codigo = tr.children[1].textContent;
+
+  fetch(`${API_URL}/${codigo}`, { method: 'DELETE' })
+    .then(res => {
+      if (!res.ok) throw new Error('Error al eliminar producto');
+      alert('Producto eliminado correctamente');
+      actualizarLista();
+    })
+    .catch(error => {
+      console.error('Error al eliminar producto:', error);
+      alert('No se pudo eliminar el producto');
+    });
+}

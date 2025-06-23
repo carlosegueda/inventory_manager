@@ -15,6 +15,7 @@ body {
   
 }
 
+
 h1{
   width: 100%;
   height: 40px;
@@ -132,12 +133,19 @@ thead {
   background: #3e148b;
   color: white;
   font-weight: 600;
+  text-align: center;
 }
 
 thead th {
   padding: 16px 12px;
   text-align: left;
   user-select: none;
+  
+}
+
+td:nth-child(6),
+th:nth-child(6) {
+  text-align: center;
 }
 
 .divtabla{

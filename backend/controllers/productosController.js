@@ -108,6 +108,41 @@ async function getById(req, res) {
   }
 }
 
+
+//Funcion para editar un producto (PUT)
+async function updateProduct(req, res) {
+  const codigo = parseInt(req.params.codigo);
+  if (isNaN(codigo)) {
+    return res.status(400).json({ error: 'Código inválido' });
+  }
+
+  try {
+    await poolConnect;
+
+    const { nombre, precio, cantidad, categoria } = req.body;
+    const request = pool.request();
+    const result = await request
+      .input('nombre', sql.VarChar, nombre)
+      .input('precio', sql.Decimal(10, 2), precio)
+      .input('cantidad', sql.Int, cantidad)
+      .input('categoria', sql.VarChar, categoria)
+      .query(`
+        UPDATE ProductosGI
+        SET nombre = @nombre, precio = @precio, cantidad = @cantidad, categoria = @categoria
+        WHERE codigo = ${codigo}
+      `);
+
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    res.json({ message: 'Producto actualizado correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar producto:', error);
+    res.status(500).json({ error: 'Error al actualizar el producto' });
+  }
+}
+
 // Exporto las funciones para que puedan ser utilizadas en otros archivos
-module.exports = { getAll, addProduct, getById, deleteById , deleteAll };
+module.exports = { getAll, addProduct, getById, deleteById , deleteAll , updateProduct };
 

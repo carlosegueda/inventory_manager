@@ -14,11 +14,21 @@ GET http://localhost:3000/productos
 Accept: application/json
 
 ### 
-DELETE http://localhost:3000/productos/32
+DELETE http://localhost:3000/productos/39
 Accept: application/json
 
 ### 
-GET http://localhost:3000/productos/32
+GET http://localhost:3000/productos/35
 Accept: application/json
 
 
+###
+PUT http://localhost:3000/productos/35
+Content-Type: application/json
+
+{
+  "nombre": "Queso azul con moho",
+  "precio": 55,
+  "cantidad": 32,
+  "categoria": "Comida"
+}
