@@ -70,7 +70,7 @@ form input[type="text"]{
   margin-bottom: 10px;
   border: 1.8px solid #ddd;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 20px;
   transition: border-color 0.3s ease;
 }
 
@@ -101,7 +101,7 @@ form button {
   border-radius: 8px;
   color: white; 
   font-weight: 600;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 55%;
@@ -204,7 +204,7 @@ tbody tr:nth-child(even) {
   border-radius: 10px;
   color: white;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;

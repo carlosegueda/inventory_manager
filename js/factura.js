@@ -104,6 +104,7 @@ document
     //Validar que el nombre exista en el inventario
     if (!miProducto) {
       mostrarNotificacion("El producto seleccionado no existe");
+      document.getElementById("nombre-factura").value = "";
       return;
     }
 
@@ -292,13 +293,4 @@ function mostrarNotificacion(mensaje, duracion = 3000) {
   }, duracion);
 }
 
-
-function abrirForm() {
-  document.getElementById("miModal").style.display = "flex";
-}
-
-
-function cerrarForm() {
-  document.getElementById("miModal").style.display = "none";
-}
 
