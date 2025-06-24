@@ -259,3 +259,17 @@ tbody tr:nth-child(even) {
   background-color: #5f2fb8;
   color: #fff;
 }
+
+#notificacion {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  background-color: #c88cf8; /* rojo para error */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-family: sans-serif;
+  transition: opacity 1s ease;
+}
