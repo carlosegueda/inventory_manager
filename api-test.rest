@@ -18,7 +18,7 @@ DELETE http://localhost:3000/productos/39
 Accept: application/json
 
 ### 
-GET http://localhost:3000/productos/35
+GET http://localhost:3000/productos/42
 Accept: application/json
 
 

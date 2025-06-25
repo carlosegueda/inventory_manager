@@ -16,7 +16,7 @@ npm install
 en la carpeta backend:
 node server.js
 
-4. Abrir el archivo inventario.hmtl con la extensión Live Server
+4. Abrir el archivo index.hmtl con la extensión Live Server
 
 Aplicación Web desarrollada por Carlos Osegueda
 https://github.com/carlosegueda
