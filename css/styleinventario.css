@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: #6857b4;
+  background: #06021a;
   margin: 0;
   padding: 20px;
   color: #ffffff;
@@ -45,7 +45,7 @@ h1{
 
 /* Formulario estilizado */
 form {
-  background: rgb(151, 140, 209);
+  background: rgb(31, 23, 70);
   padding: 20px 25px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
@@ -56,61 +56,6 @@ form {
   margin-bottom: 15px;
 }
 
-form label {
-  display: block;
-  margin-bottom: 7px;
-  font-weight: 500;
-  font-size: 18px;
-}
-
-form input[type="text"]{
-  width: 70%;
-  height: 40px;
-  padding: 10px 14px;
-  margin-bottom: 10px;
-  border: 1.8px solid #ddd;
-  border-radius: 8px;
-  font-size: 20px;
-  transition: border-color 0.3s ease;
-}
-
-
-form input[type="number"] {
-  width: 40%;
-  height: 40px;
-  padding: 10px 14px;
-  margin-bottom: 10px;
-  border: 1.8px solid #ddd;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: border-color 0.3s ease;
-}
-
-
-
-form input[type="text"]:focus,
-form input[type="number"]:focus {
-  border-color: #3e148b;
-  outline: none;
-}
-
-form button {
-  background: #3e148b;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  color: white; 
-  font-weight: 600;
-  font-size: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 55%;
-  height: 60px;
-}
-
-form button:hover {
-  background: #18094eee;
-}
 
 /* Tabla estilizada */
 .table-container {
@@ -194,36 +139,6 @@ tbody tr:nth-child(even) {
   background-color: #cbb3e2;
 }
 
-
-/* Botón eliminar todo */
-#eliminar-tabla {
-  margin-top: 20px;
-  background: #cc0000;
-  width: 200px;
-  padding: 12px;
-  border-radius: 10px;
-  color: white;
-  font-weight: 700;
-  font-size: 20px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#eliminar-tabla:hover {
-  background: #990000;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .main-content {
-    flex-direction: column;
-  }
-  .table-container,
-  form {
-    flex: 1 1 100%;
-  }
-}
 
 .navbar {
   background-color: #3e148b;
@@ -333,21 +248,12 @@ tbody tr:nth-child(even) {
     width: 100%;
   }
 
-  form input[type="text"],
-  form input[type="number"],
-  form button {
-    width: 90%;
-    font-size: 16px;
-  }
 
   table {
     font-size: 16px;
   }
 
-  #eliminar-tabla {
-    width: 90%;
-    font-size: 18px;
-  }
+ 
 
   .navbar {
     flex-direction: column;
@@ -399,4 +305,212 @@ tbody tr:nth-child(even) {
     font-size: 20px;
     padding: 5px;
   }
+}
+
+
+.input-group {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  line-height: 1.25rem;
+}
+
+.input-group label {
+  display: block;
+  color: rgb(194, 188, 207);
+  margin-bottom: 4px;
+}
+
+.input-group input {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 2px solid rgb(77, 87, 104);
+  outline: 0;
+  font-size: 17px;
+  background-color: rgb(31, 23, 70);
+  padding: 0.75rem 1rem;
+  color: rgba(243, 244, 246, 1);
+}
+
+.input-group input:focus {
+  border-color: rgba(167, 139, 250);
+}
+
+
+
+
+
+
+
+.agregar {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  font-family: sans-serif;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+/* Shadow layer */
+.agregar .shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+/* Edge layer */
+.agregar .edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(
+    to left,
+    hsl(217, 33%, 16%) 0%,
+    hsl(263, 46%, 41%) 8%,
+    hsl(263, 46%, 41%) 92%,
+    hsl(217, 33%, 16%) 100%
+  );
+}
+
+/* Front layer */
+.agregar .front {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  font-size: 1.25rem;
+  color: white;
+  background: hsl(258, 66%, 55%);
+  border-radius: 8px;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+/* Hover and active states */
+.agregar:hover .shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.agregar:hover .front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.agregar:active .shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.agregar:active .front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+/* Disable text selection */
+.agregar .front span {
+  user-select: none;
+}
+
+
+
+.eliminar-tabla {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  font-family: sans-serif;
+}
+
+/* Sombra */
+.eliminar-tabla .shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+/* Borde degradado (borde exterior) */
+.eliminar-tabla .edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(
+    to left,
+    hsl(0, 50%, 15%) 0%,
+    hsl(0, 85%, 45%) 8%,
+    hsl(0, 85%, 45%) 92%,
+    hsl(0, 50%, 15%) 100%
+  );
+}
+
+/* Capa superior (botón rojo) */
+.eliminar-tabla .front {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  font-size: 1.25rem;
+  color: white;
+  background: hsl(0, 85%, 55%);
+  border-radius: 8px;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+/* Estados hover y activo */
+.eliminar-tabla:hover .shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.eliminar-tabla:hover .front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.eliminar-tabla:active .shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.eliminar-tabla:active .front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+/* Evitar selección de texto */
+.eliminar-tabla .front span {
+  user-select: none;
+}
+
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

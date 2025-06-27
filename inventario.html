@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/styleinventario.css" /> 
+    <link rel="stylesheet" href="css/styleinventario.css" />
     <link rel="icon" href="src/page_icon.png" type="image/x-icon" />
     <title>Inventario</title>
   </head>
@@ -22,48 +22,70 @@
           <h1>
             <center>INGRESAR PRODUCTO</center>
           </h1>
-          <br>
-          <label for="nombre-producto">Nombre:</label>
-          <input
-            id="nombre-producto"
-            name="nombre"
-            autocomplete="off"
-            type="text"
-            required
-          />
           <br />
-          <label for="precio-producto">Precio:</label>
-          <input
-            id="precio-producto"
-            name="precio"
-            min="0.01"
-            autocomplete="off"
-            type="number"
-            step="0.01"
-            required
-          />
-          <br />
-          <label for="cantidad-producto">Stock:</label>
-          <input
-            id="cantidad-producto"
-            name="cantidad"
-            min="0"
-            autocomplete="off"
-            type="number"
-            required
-          />
-          <br />
-          <label for="categoria-producto">Categoría:</label>
-          <input
-            id="categoria-producto"
-            name="categoria"
-            autocomplete="off"
-            type="text"
-            required
-          />
-          <br />
-          <button type="submit">Agregar</button>
-          <button id="eliminar-tabla" type="button">Eliminar Tabla</button>
+          <div class="input-group">
+            <label for="nombre-producto">Nombre:</label>
+            <input
+              id="nombre-producto"
+              name="nombre"
+              autocomplete="off"
+              type="text"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="precio-producto">Precio:</label>
+            <input
+              id="precio-producto"
+              name="precio"
+              min="0.01"
+              autocomplete="off"
+              type="number"
+              step="0.01"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="cantidad-producto">Stock:</label>
+            <input
+              id="cantidad-producto"
+              name="cantidad"
+              min="0"
+              autocomplete="off"
+              type="number"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="categoria-producto">Categoría:</label>
+            <input
+              id="categoria-producto"
+              name="categoria"
+              autocomplete="off"
+              type="text"
+              required
+            />
+          </div>
+
+          <button class="agregar" type="submit">
+            <span class="shadow"></span>
+            <span class="edge"></span>
+            <div class="front">
+              <span>Agregar</span>
+            </div>
+          </button>
+
+          <button class="eliminar-tabla" type="button">
+            <span class="shadow"></span>
+            <span class="edge"></span>
+            <div class="front">
+              <span>Eliminar Tabla</span>
+            </div>
+          </button>
+
         </form>
       </div>
 
@@ -72,8 +94,8 @@
           <h3>EDITAR PRODUCTO</h3>
           <label>Codigo del Produto:</label>
           <label id="codigo-productoED">Codigo del Produto:</label>
-          <br>
-          <br>
+          <br />
+          <br />
           <label for="nombre-productoED">Nombre del Produto:</label>
           <input
             id="nombre-productoED"
@@ -114,11 +136,11 @@
           />
           <br />
           <button id="editar-producto" type="button">EDITAR PRODUCTO</button>
-          
+
           <button onclick="cerrarForm()">CERRAR EDITOR</button>
         </div>
       </div>
-      
+
       <div class="divtabla">
         <h1>
           <center>LISTA DE PRODUCTOS</center>
